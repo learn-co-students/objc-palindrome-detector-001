@@ -21,6 +21,21 @@
     BOOL racecarIsPalindrome = [self stringIsPalindrome:racecar];
     NSLog(@"%d : %@", racecarIsPalindrome, racecar);
     
+    BOOL palindromeIsPalindrome = [self stringIsPalindrome:palindrome];
+    NSLog(@"%d : %@", palindromeIsPalindrome, palindrome);
+    
+    NSString *bob = @"Bob";
+    BOOL bobIsPalindrome = [self stringIsPalindrome:bob];
+    NSLog(@"%d : %@", bobIsPalindrome, bob);
+    
+    NSString *iPreferPi = @"I prefer pi";
+    BOOL statementPalindrome = [self stringIsPalindrome:iPreferPi];
+    NSLog(@"%d : %@", statementPalindrome, iPreferPi);
+    
+    NSString *fleeToMe = @"Flee to me, remote elf.";
+    BOOL fleeToMeIsPalindrome = [self stringIsPalindrome:fleeToMe];
+    NSLog(@"%d : %@", fleeToMeIsPalindrome, fleeToMe);
+    
     // do not alter
     return YES;  //
 }   ///////////////
@@ -32,8 +47,21 @@
  */
 
 - (BOOL)stringIsPalindrome:(NSString *)string{
-    NSString *reverse = [self stringByReversingString:string];
-    BOOL stringISEqualToReverse = [string isEqualToString:reverse];
+    NSArray *punctuations = @[ @".", @",", @"!", @"?", @":", @";" ];
+    NSString *withoutPunctuation = [string copy];
+    
+    for (NSUInteger i = 0; i < [punctuations count]; i++) {
+        NSString *punctuation = punctuations[i];
+        withoutPunctuation = [withoutPunctuation stringByReplacingOccurrencesOfString:punctuation withString:@""];
+    }
+    
+    NSString *spaceless = [withoutPunctuation stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSString *lowercase = [spaceless lowercaseString];
+    NSString *reverse = [self stringByReversingString:lowercase];
+    
+    NSLog(@"lowercase: %@, reverse %@", lowercase, reverse);
+    
+    BOOL stringISEqualToReverse = [lowercase isEqualToString:reverse];
     
     return stringISEqualToReverse;
 }
